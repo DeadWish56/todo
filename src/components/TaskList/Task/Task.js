@@ -2,22 +2,12 @@ import React, { Component } from "react";
 
 export default class Task extends Component {
 
-  state = {
-    done: false
-  }
 
-  onTaskClick = (e) => {
-    this.setState(({done}) => {
-      return {
-        done: !done
-      }
-    })
-  }
 
   render() {
-    const {onDeleted, label, id} = this.props
-    const {done} = this.state
+    const {onDeleted, label, onToggleDone, done} = this.props
     let className = ''
+
     if(done) {
       className = 'completed'
     }
@@ -25,7 +15,7 @@ export default class Task extends Component {
     return (
       <li className={className}>
       <div className="view">
-        <input className="toggle" type="checkbox" onClick={this.onTaskClick}/>
+        <input className="toggle" type="checkbox" onClick={onToggleDone}/>
         <label>
           <span className="description">{label}</span>
           <span className="created">created 5 minutes ago</span>

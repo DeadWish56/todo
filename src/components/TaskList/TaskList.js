@@ -2,7 +2,9 @@ import React from "react";
 
 import Task from "./Task/Task";
 
-const TaskList = function ({ todos, onDeleted }) {
+
+
+const TaskList = function ({ todos, onDeleted, onToggleDone }) {
     const elements = todos.map((item) => {
         const {id, ...itemProps} = item
         
@@ -12,8 +14,8 @@ const TaskList = function ({ todos, onDeleted }) {
                 key={id}
                 onDeleted={() => {
                     onDeleted(id)
-                }} />
-            
+                }}
+                onToggleDone = {() => {onToggleDone(id)}} />                
         )
     })
     return (
