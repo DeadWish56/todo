@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import NewTaskForm from './components/NewTaskForm/NewTaskForm'
 import TaskList from "./components/TaskList/TaskList";
 import Footer from './components/Footer/Footer'
-import AddNewTask from "./components/TaskList/AddNewTask/AddNewTask";
 
 
 
@@ -17,6 +16,12 @@ export default class App extends Component {
             this.createNewTask('Make Awesome App'),
             this.createNewTask('Hava a nice day'),
         ]
+    }
+
+    
+
+    todoFilter = (status) => {
+        console.log('button', status)
     }
 
     deleteTask = (id) => {
@@ -68,14 +73,15 @@ export default class App extends Component {
 
         return (
             <section className="todoapp">
-            <NewTaskForm />
+            <NewTaskForm 
+            onAddTask = {this.addTask}/>
             <section className="main">
                 <TaskList todos={todoData}
                 onDeleted = {this.deleteTask}
                 onToggleDone = {this.onToggleDone}/>
-                <AddNewTask 
-                onAddTask = {this.addTask}/>
-                <Footer itemsLeft = {itemsLeft}/>
+
+                <Footer itemsLeft = {itemsLeft}
+                        onFilter = {this.todoFilter}/>
             </section>
           </section>
         )  

@@ -2,14 +2,16 @@ import React, { Component } from "react";
 
 export default class TaskFilter extends Component {
   render() {
-const style = {
-  color: 'red',
-}
-
+    const { onFilter } = this.props
+    console.log(this.props)
     return (
         <ul className="filters">
         <li>
-          <button className="selected" style = {style}>All</button>
+          <button className="selected"
+                  onClick={ () => {
+                    onFilter('all')
+                  }}
+                  >All</button>
         </li>
         <li>
           <button>Active</button>
