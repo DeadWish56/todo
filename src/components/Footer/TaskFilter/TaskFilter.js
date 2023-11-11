@@ -3,7 +3,6 @@ import React, { Component } from "react";
 export default class TaskFilter extends Component {
   render() {
     const { onFilter } = this.props
-    console.log(this.props)
     return (
         <ul className="filters">
         <li>
@@ -14,28 +13,18 @@ export default class TaskFilter extends Component {
                   >All</button>
         </li>
         <li>
-          <button>Active</button>
+          <button
+                  onClick={ () => {
+                    onFilter('active')
+                  }}>Active</button>
         </li>
         <li>
-          <button>Completed</button>
+          <button
+                  onClick={ () => {
+                    onFilter('completed')
+                  }}>Completed</button>
         </li>
       </ul>
     )
   }
 }
-
-// export default function TaskFilter () {
-//     return (
-//         <ul className="filters">
-//         <li>
-//           <button className="selected">All</button>
-//         </li>
-//         <li>
-//           <button>Active</button>
-//         </li>
-//         <li>
-//           <button>Completed</button>
-//         </li>
-//       </ul>
-//     )
-// }

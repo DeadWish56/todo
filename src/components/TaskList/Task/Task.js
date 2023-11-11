@@ -6,7 +6,7 @@ export default class Task extends Component {
 
   render() {
     const {onDeleted, label, onToggleDone, done} = this.props
-    let className = ''
+    let className = null
 
     if(done) {
       className = 'completed'

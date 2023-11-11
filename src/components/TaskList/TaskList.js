@@ -4,10 +4,9 @@ import Task from "./Task/Task";
 
 
 
-const TaskList = function ({ todos, onDeleted, onToggleDone }) {
+const TaskList = function ({ todos, onDeleted, onToggleDone, filter }) {
     const elements = todos.map((item) => {
         const {id, ...itemProps} = item
-        
         return (
             
                 <Task {...itemProps}
@@ -18,11 +17,21 @@ const TaskList = function ({ todos, onDeleted, onToggleDone }) {
                 onToggleDone = {() => {onToggleDone(id)}} />                
         )
     })
+let elementsFiltered = elements.filter((elem) => {
+    if (filter === 'active' && elem.props.done === false) {
+        return elem
+    } else if (filter === 'all') {
+        return elem
+    } else if (filter === 'completed' && elem.props.done === true) {
+        return elem
+    }
+})
     return (
         <ul className="todo-list">
-            { elements }
+            { elementsFiltered }
         </ul>
     )
+
 }
 
 export default TaskList

@@ -15,13 +15,18 @@ export default class App extends Component {
             this.createNewTask('Drink coffee'),
             this.createNewTask('Make Awesome App'),
             this.createNewTask('Hava a nice day'),
-        ]
+        ],
+        filter: 'all'
     }
 
-    
+
 
     todoFilter = (status) => {
-        console.log('button', status)
+        this.setState(() => {
+            return {
+                filter: status
+            }
+        })
     }
 
     deleteTask = (id) => {
@@ -29,6 +34,18 @@ export default class App extends Component {
             const idx = todoData.findIndex((el) => el.id === id)
             let newArr = todoData.toSpliced(idx, 1)
 
+            return {
+                todoData: newArr
+            }
+        })
+    }
+
+    clearCompleted = () => {
+        console.log(this.state,'кнопка нажата')
+        this.setState(({todoData}) => {
+            let newArr = todoData.filter((elem) => {
+                return elem.done !==true
+            })
             return {
                 todoData: newArr
             }
@@ -67,7 +84,7 @@ export default class App extends Component {
     }
 
     render () {
-        const { todoData } = this.state
+        const { todoData, filter } = this.state
         const itemsLeft = todoData.length - todoData
             .filter((el)=> el.done).length
 
@@ -77,11 +94,14 @@ export default class App extends Component {
             onAddTask = {this.addTask}/>
             <section className="main">
                 <TaskList todos={todoData}
+                filter = {filter}
                 onDeleted = {this.deleteTask}
                 onToggleDone = {this.onToggleDone}/>
 
                 <Footer itemsLeft = {itemsLeft}
-                        onFilter = {this.todoFilter}/>
+                        onFilter = {this.todoFilter}
+                        filter = {this.state.filter}
+                        onClearCompleted = {this.clearCompleted} />
             </section>
           </section>
         )  
