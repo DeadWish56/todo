@@ -20,9 +20,11 @@ const TaskList = function ({ todos, onDeleted, onToggleDone, filter }) {
 let elementsFiltered = elements.filter((elem) => {
     if (filter === 'active' && elem.props.done === false) {
         return elem
-    } else if (filter === 'all') {
+    } 
+    if (filter === 'all') {
         return elem
-    } else if (filter === 'completed' && elem.props.done === true) {
+    }
+    if (filter === 'completed' && elem.props.done === true) {
         return elem
     }
 })
