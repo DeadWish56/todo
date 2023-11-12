@@ -5,7 +5,7 @@ import Task from "./Task/Task";
 
 
 
-const TaskList = function ({ todos, onDeleted, onToggleDone, filter }) {
+const TaskList = function ({ todos, onDeleted, onToggleDone, filter, onEditing }) {
     
     const elements = todos.map((item) => {
         const {id, ...itemProps} = item
@@ -13,10 +13,10 @@ const TaskList = function ({ todos, onDeleted, onToggleDone, filter }) {
             
                 <Task {...itemProps}
                 key={id}
-                onDeleted={() => {
-                    onDeleted(id)
+                onDeleted={() => {onDeleted(id)
                 }}
-                onToggleDone = {() => {onToggleDone(id)}} />                
+                onToggleDone = {() => {onToggleDone(id)}}
+                onEditing = {() => {onEditing(id)}} />                
         )
     })
 let elementsFiltered = elements.filter((elem) => {

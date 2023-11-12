@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 import NewTaskForm from './components/NewTaskForm/NewTaskForm'
 import TaskList from "./components/TaskList/TaskList";
@@ -19,7 +20,17 @@ export default class App extends Component {
         filter: 'all'
     }
 
-
+    onEditing = (id) => {
+        this.setState(({todoData}) => {
+            const idx = todoData.findIndex((el) => el.id === id)
+            const oldItem = todoData[idx]
+            const newItem = {...oldItem, editing: !oldItem.editing}
+            let newArr = todoData.toSpliced(idx, 1, newItem)
+            return {
+                todoData: newArr
+            }
+        })
+    }
 
     todoFilter = (status) => {
         this.setState(() => {
@@ -55,7 +66,9 @@ export default class App extends Component {
         return {
             label,
             id: this.maxID++,
-            done: false
+            done: false,
+            editing: false,
+            created: new Date()
         }
     }
 
@@ -86,7 +99,6 @@ export default class App extends Component {
         const { todoData, filter } = this.state
         const itemsLeft = todoData.length - todoData
             .filter((el)=> el.done).length
-
         return (
             <section className="todoapp">
             <NewTaskForm 
@@ -95,7 +107,8 @@ export default class App extends Component {
                 <TaskList todos={todoData}
                 filter = {filter}
                 onDeleted = {this.deleteTask}
-                onToggleDone = {this.onToggleDone}/>
+                onToggleDone = {this.onToggleDone}
+                onEditing = {this.onEditing} />
 
                 <Footer itemsLeft = {itemsLeft}
                         onFilter = {this.todoFilter}
@@ -106,4 +119,14 @@ export default class App extends Component {
         )  
     }
  
+}
+
+App.defaultProps = {
+    todoData: [],
+    filter: 'all'
+}
+
+App.propTypes = {
+    todoData: PropTypes.arrayOf(PropTypes.object).isRequired,
+    filter: PropTypes.string
 }

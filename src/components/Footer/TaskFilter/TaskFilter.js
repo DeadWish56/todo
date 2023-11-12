@@ -4,7 +4,6 @@ import PropTypes from "prop-types"
 export default class TaskFilter extends Component {
   render() {
     const { onFilter, filter } = this.props
-    console.log(this.props)
     
     return (
         <ul className="filters">
