@@ -5,8 +5,6 @@ import NewTaskForm from './components/NewTaskForm'
 import TaskList from "./components/TaskList";
 import Footer from './components/Footer'
 
-
-
 export default class App extends Component {
     maxID = 0
 
@@ -20,10 +18,10 @@ export default class App extends Component {
     }
 
     onEditingToggle = (id) => {
-        this.setState(({todoData}) => {
+        this.setState(({ todoData }) => {
             const idx = todoData.findIndex((el) => el.id === id)
             const oldItem = todoData[idx]
-            const newItem = {...oldItem, editing: !oldItem.editing}
+            const newItem = { ...oldItem, editing: !oldItem.editing }
             let newArr = todoData.toSpliced(idx, 1, newItem)
             return {
                 todoData: newArr
@@ -51,9 +49,9 @@ export default class App extends Component {
     }
 
     clearCompleted = () => {
-        this.setState(({todoData}) => {
+        this.setState(({ todoData }) => {
             let newArr = todoData.filter((elem) => {
-                return elem.done !==true
+                return elem.done !== true
             })
             return {
                 todoData: newArr
@@ -72,7 +70,7 @@ export default class App extends Component {
     }
 
     editingTask = (id, value) => {
-        this.setState(({todoData}) => {
+        this.setState(({ todoData }) => {
             const idx = todoData.findIndex((el) => el.id === id)
             const findItem = todoData[idx]
             findItem.label = value
@@ -87,7 +85,7 @@ export default class App extends Component {
     addTask = (text) => {
         const newTask = this.createNewTask(text)
 
-        this.setState(({todoData}) => {
+        this.setState(({ todoData }) => {
             return {
                 todoData: [...todoData, newTask]
             }
@@ -95,10 +93,10 @@ export default class App extends Component {
     }
 
     onToggleDone = (id) => {
-        this.setState(({todoData}) => {
+        this.setState(({ todoData }) => {
             const idx = todoData.findIndex((el) => el.id === id)
             const oldItem = todoData[idx]
-            const newItem = {...oldItem, done: !oldItem.done}
+            const newItem = { ...oldItem, done: !oldItem.done }
             let newArr = todoData.toSpliced(idx, 1, newItem)
 
             return {
@@ -107,31 +105,30 @@ export default class App extends Component {
         })
     }
 
-    render () {
+    render() {
         const { todoData, filter } = this.state
         const itemsLeft = todoData.length - todoData
-            .filter((el)=> el.done).length
+            .filter((el) => el.done).length
         return (
             <section className="todoapp">
-            <NewTaskForm 
-            onAddTask = {this.addTask}/>
-            <section className="main">
-                <TaskList todos={todoData}
-                filter = {filter}
-                onDeleted = {this.deleteTask}
-                onToggleDone = {this.onToggleDone}
-                onEditingToggle = {this.onEditingToggle}
-                onEditingTask = {this.editingTask} />
+                <NewTaskForm
+                    onAddTask={this.addTask} />
+                <section className="main">
+                    <TaskList todos={todoData}
+                        filter={filter}
+                        onDeleted={this.deleteTask}
+                        onToggleDone={this.onToggleDone}
+                        onEditingToggle={this.onEditingToggle}
+                        onEditingTask={this.editingTask} />
 
-                <Footer itemsLeft = {itemsLeft}
-                        onFilter = {this.todoFilter}
-                        filter = {this.state.filter}
-                        onClearCompleted = {this.clearCompleted} />
+                    <Footer itemsLeft={itemsLeft}
+                        onFilter={this.todoFilter}
+                        filter={this.state.filter}
+                        onClearCompleted={this.clearCompleted} />
+                </section>
             </section>
-          </section>
-        )  
+        )
     }
- 
 }
 
 App.defaultProps = {

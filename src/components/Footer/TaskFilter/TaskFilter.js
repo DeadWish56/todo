@@ -4,27 +4,27 @@ import PropTypes from "prop-types"
 export default class TaskFilter extends Component {
   render() {
     const { onFilter, filter } = this.props
-    
+
     return (
-        <ul className="filters">
+      <ul className="filters">
         <li>
           <button className={(filter === "all" ? 'selected' : '')}
-                  onClick={ () => {
-                    onFilter('all')
-                  }}
-                  >All</button>
+            onClick={() => {
+              onFilter('all')
+            }}
+          >All</button>
         </li>
         <li>
           <button className={(filter === "active" ? 'selected' : '')}
-                  onClick={ () => {
-                    onFilter('active')
-                  }}>Active</button>
+            onClick={() => {
+              onFilter('active')
+            }}>Active</button>
         </li>
         <li>
           <button className={(filter === "completed" ? 'selected' : '')}
-                  onClick={ () => {
-                    onFilter('completed')
-                  }}>Completed</button>
+            onClick={() => {
+              onFilter('completed')
+            }}>Completed</button>
         </li>
       </ul>
     )
@@ -32,7 +32,7 @@ export default class TaskFilter extends Component {
 }
 
 TaskFilter.defaultProps = {
-  onFilter: () => {},
+  onFilter: () => { },
   filter: 'all'
 }
 
