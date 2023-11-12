@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types"
 
 export default class Task extends Component {
 
@@ -6,11 +7,10 @@ export default class Task extends Component {
 
   render() {
     const {onDeleted, label, onToggleDone, done} = this.props
-
     return (
       <li className={(done === true ? 'completed' : '')}>
       <div className="view">
-        <input className="toggle" type="checkbox" onClick={onToggleDone} checked={done === true ? 'checked': ""}/>
+        <input className="toggle" type="checkbox" onChange={onToggleDone}  checked={done === true ? 'checked' : ""}/>
         <label>
           <span className="description">{label}</span>
           <span className="created">created 5 minutes ago</span>
@@ -27,4 +27,17 @@ export default class Task extends Component {
     </li>
   )
   }
+}
+
+Task.defaultProps = {
+  onDeleted: () => {},
+  onToggleDone: () => {},
+  done: false
+}
+
+Task.propTypes = {
+  onDeleted: PropTypes.func,
+  label: PropTypes.string,
+  onToggleDone: PropTypes.func,
+  done: PropTypes.bool
 }

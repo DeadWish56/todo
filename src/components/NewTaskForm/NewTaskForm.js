@@ -13,10 +13,11 @@ export default class NewTaskForm extends Component {
   }
 
   onSubmit = (e) => {
+    const {onAddTask} = this.props
     let {label} = this.state
     e.preventDefault()
     if (label.length > 0 && label[0] !== ' ') {
-      this.props.onAddTask(this.state.label)
+      onAddTask(this.state.label)
       this.setState({
         label: ''
       })

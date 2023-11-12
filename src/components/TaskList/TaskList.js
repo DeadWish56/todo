@@ -1,10 +1,12 @@
 import React from "react";
+import PropTypes from 'prop-types'
 
 import Task from "./Task/Task";
 
 
 
 const TaskList = function ({ todos, onDeleted, onToggleDone, filter }) {
+    
     const elements = todos.map((item) => {
         const {id, ...itemProps} = item
         return (
@@ -34,6 +36,20 @@ let elementsFiltered = elements.filter((elem) => {
         </ul>
     )
 
+}
+
+TaskList.defaultProps = {
+    todos: [],
+    onDeleted: () => {},
+    onToggleDone: () => {},
+    filter: 'all'
+}
+
+TaskList.propTypes = {
+    onDeleted: PropTypes.func,
+    todos: PropTypes.arrayOf(PropTypes.object).isRequired,
+    onToggleDone: PropTypes.func,
+    filter: PropTypes.string
 }
 
 export default TaskList

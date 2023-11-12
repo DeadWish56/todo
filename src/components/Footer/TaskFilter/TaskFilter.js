@@ -1,8 +1,10 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types"
 
 export default class TaskFilter extends Component {
   render() {
     const { onFilter, filter } = this.props
+    console.log(this.props)
     
     return (
         <ul className="filters">
@@ -28,4 +30,14 @@ export default class TaskFilter extends Component {
       </ul>
     )
   }
+}
+
+TaskFilter.defaultProps = {
+  onFilter: () => {},
+  filter: 'all'
+}
+
+TaskFilter.propTypes = {
+  onFilter: PropTypes.func,
+  filter: PropTypes.string
 }

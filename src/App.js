@@ -41,7 +41,6 @@ export default class App extends Component {
     }
 
     clearCompleted = () => {
-        console.log(this.state,'кнопка нажата')
         this.setState(({todoData}) => {
             let newArr = todoData.filter((elem) => {
                 return elem.done !==true
