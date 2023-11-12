@@ -1,14 +1,13 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-import NewTaskForm from './components/NewTaskForm/NewTaskForm'
-import TaskList from "./components/TaskList/TaskList";
-import Footer from './components/Footer/Footer'
+import NewTaskForm from './components/NewTaskForm'
+import TaskList from "./components/TaskList";
+import Footer from './components/Footer'
 
 
 
 export default class App extends Component {
-
     maxID = 0
 
     state = {
@@ -73,8 +72,6 @@ export default class App extends Component {
     }
 
     editingTask = (id, value) => {
-        console.log(id)
-        console.log(value)
         this.setState(({todoData}) => {
             const idx = todoData.findIndex((el) => el.id === id)
             const findItem = todoData[idx]
