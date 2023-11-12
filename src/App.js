@@ -20,7 +20,7 @@ export default class App extends Component {
         filter: 'all'
     }
 
-    onEditing = (id) => {
+    onEditingToggle = (id) => {
         this.setState(({todoData}) => {
             const idx = todoData.findIndex((el) => el.id === id)
             const oldItem = todoData[idx]
@@ -72,6 +72,21 @@ export default class App extends Component {
         }
     }
 
+    editingTask = (id, value) => {
+        console.log(id)
+        console.log(value)
+        this.setState(({todoData}) => {
+            const idx = todoData.findIndex((el) => el.id === id)
+            const findItem = todoData[idx]
+            findItem.label = value
+            findItem.editing = false
+            const newArr = todoData.toSpliced(idx, 1, findItem)
+            return {
+                todoData: newArr
+            }
+        })
+    }
+
     addTask = (text) => {
         const newTask = this.createNewTask(text)
 
@@ -108,7 +123,8 @@ export default class App extends Component {
                 filter = {filter}
                 onDeleted = {this.deleteTask}
                 onToggleDone = {this.onToggleDone}
-                onEditing = {this.onEditing} />
+                onEditingToggle = {this.onEditingToggle}
+                onEditingTask = {this.editingTask} />
 
                 <Footer itemsLeft = {itemsLeft}
                         onFilter = {this.todoFilter}
