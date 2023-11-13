@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { formatDistanceToNow } from 'date-fns'
+import './index.css'
 
 export default class Task extends Component {
   constructor(props) {

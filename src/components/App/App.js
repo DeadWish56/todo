@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import NewTaskForm from './components/NewTaskForm'
-import TaskList from './components/TaskList'
-import Footer from './components/Footer'
+import NewTaskForm from '../NewTaskForm'
+import TaskList from '../TaskList'
+import Footer from '../Footer'
+import './index.css'
 
 export default class App extends Component {
   maxID = 0
