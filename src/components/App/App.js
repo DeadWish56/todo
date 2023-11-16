@@ -1,21 +1,25 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 
 import NewTaskForm from '../NewTaskForm'
 import TaskList from '../TaskList'
 import Footer from '../Footer'
 import './index.css'
 
-export default class App extends Component {
-  maxID = 0
+/* eslint-disable no-plusplus */
 
-  state = {
-    todoData: [
-      this.createNewTask('Drink coffee'),
-      this.createNewTask('Make Awesome App'),
-      this.createNewTask('Hava a nice day'),
-    ],
-    filter: 'all',
+export default class App extends Component {
+  constructor(props) {
+    super(props)
+    this.maxID = 0
+
+    this.state = {
+      todoData: [
+        this.createNewTask('Drink coffee'),
+        this.createNewTask('Make Awesome App'),
+        this.createNewTask('Hava a nice day'),
+      ],
+      filter: 'all',
+    }
   }
 
   onEditingToggle = (id) => {
@@ -23,7 +27,7 @@ export default class App extends Component {
       const idx = todoData.findIndex((el) => el.id === id)
       const oldItem = todoData[idx]
       const newItem = { ...oldItem, editing: !oldItem.editing }
-      let newArr = todoData.toSpliced(idx, 1, newItem)
+      const newArr = todoData.toSpliced(idx, 1, newItem)
       return {
         todoData: newArr,
       }
@@ -41,7 +45,7 @@ export default class App extends Component {
   deleteTask = (id) => {
     this.setState(({ todoData }) => {
       const idx = todoData.findIndex((el) => el.id === id)
-      let newArr = todoData.toSpliced(idx, 1)
+      const newArr = todoData.toSpliced(idx, 1)
 
       return {
         todoData: newArr,
@@ -51,23 +55,13 @@ export default class App extends Component {
 
   clearCompleted = () => {
     this.setState(({ todoData }) => {
-      let newArr = todoData.filter((elem) => {
+      const newArr = todoData.filter((elem) => {
         return elem.done !== true
       })
       return {
         todoData: newArr,
       }
     })
-  }
-
-  createNewTask(label) {
-    return {
-      label,
-      id: this.maxID++,
-      done: false,
-      editing: false,
-      created: new Date(),
-    }
   }
 
   editingTask = (id, value) => {
@@ -98,12 +92,23 @@ export default class App extends Component {
       const idx = todoData.findIndex((el) => el.id === id)
       const oldItem = todoData[idx]
       const newItem = { ...oldItem, done: !oldItem.done }
-      let newArr = todoData.toSpliced(idx, 1, newItem)
+      const newArr = todoData.toSpliced(idx, 1, newItem)
 
       return {
         todoData: newArr,
       }
     })
+  }
+
+  createNewTask(label) {
+    return {
+      label,
+      /* eslint no-plusplus: "error" */
+      id: this.maxID++,
+      done: false,
+      editing: false,
+      created: new Date(),
+    }
   }
 
   render() {
@@ -125,21 +130,11 @@ export default class App extends Component {
           <Footer
             itemsLeft={itemsLeft}
             onFilter={this.todoFilter}
-            filter={this.state.filter}
+            filter={filter}
             onClearCompleted={this.clearCompleted}
           />
         </section>
       </section>
     )
   }
-}
-
-App.defaultProps = {
-  todoData: [],
-  filter: 'all',
-}
-
-App.propTypes = {
-  todoData: PropTypes.arrayOf(PropTypes.object).isRequired,
-  filter: PropTypes.string,
 }

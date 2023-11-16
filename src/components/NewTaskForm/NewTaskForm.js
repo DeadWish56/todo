@@ -2,8 +2,11 @@ import React, { Component } from 'react'
 import './index.css'
 
 export default class NewTaskForm extends Component {
-  state = {
-    label: '',
+  constructor(props) {
+    super(props)
+    this.state = {
+      label: '',
+    }
   }
 
   onLabelChange = (e) => {
@@ -14,10 +17,10 @@ export default class NewTaskForm extends Component {
 
   onSubmit = (e) => {
     const { onAddTask } = this.props
-    let { label } = this.state
+    const { label } = this.state
     e.preventDefault()
     if (label.length > 0 && label[0] !== ' ') {
-      onAddTask(this.state.label)
+      onAddTask(label)
       this.setState({
         label: '',
       })
@@ -25,6 +28,7 @@ export default class NewTaskForm extends Component {
   }
 
   render() {
+    const { label } = this.state
     return (
       <header className="header">
         <h1>todos</h1>
@@ -32,9 +36,9 @@ export default class NewTaskForm extends Component {
           <input
             className="new-todo"
             placeholder="What needs to be done?"
-            autoFocus
+            ref={(input) => input && input.focus()}
             onChange={this.onLabelChange}
-            value={this.state.label}
+            value={label}
           />
         </form>
       </header>

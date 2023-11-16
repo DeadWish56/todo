@@ -4,7 +4,9 @@ import PropTypes from 'prop-types'
 import Task from './Task'
 import './index.css'
 
-const TaskList = function ({ todos, onDeleted, onToggleDone, filter, onEditingToggle, onEditingTask }) {
+/* eslint-disable react/jsx-props-no-spreading */
+
+function TaskList({ todos, onDeleted, onToggleDone, filter, onEditingToggle, onEditingTask }) {
   const elements = todos.map((item) => {
     const { id } = item
     return (
@@ -24,7 +26,7 @@ const TaskList = function ({ todos, onDeleted, onToggleDone, filter, onEditingTo
       />
     )
   })
-  let elementsFiltered = elements.filter((elem) => {
+  const elementsFiltered = elements.filter((elem) => {
     if (filter === 'active' && elem.props.done === false) {
       return elem
     }
@@ -34,6 +36,7 @@ const TaskList = function ({ todos, onDeleted, onToggleDone, filter, onEditingTo
     if (filter === 'completed' && elem.props.done === true) {
       return elem
     }
+    return null
   })
   return <ul className="todo-list">{elementsFiltered}</ul>
 }
@@ -49,7 +52,7 @@ TaskList.defaultProps = {
 
 TaskList.propTypes = {
   onDeleted: PropTypes.func,
-  todos: PropTypes.arrayOf(PropTypes.object).isRequired,
+  todos: PropTypes.arrayOf,
   onToggleDone: PropTypes.func,
   filter: PropTypes.string,
   onEditingToggle: PropTypes.func,

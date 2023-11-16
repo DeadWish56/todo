@@ -11,8 +11,9 @@ export default class Task extends Component {
     }
 
     document.addEventListener('mousedown', (e) => {
-      if (e.target.className !== 'edit' && this.props.editing === true) {
-        this.props.onEditingToggle(this.props.id)
+      const { editing, onEditingToggle, id } = this.props
+      if (e.target.className !== 'edit' && editing === true) {
+        onEditingToggle(id)
       }
     })
   }
@@ -32,10 +33,10 @@ export default class Task extends Component {
 
   onSubmit = (e) => {
     const { onEditingTask, id } = this.props
-    let { label } = this.state
+    const { label } = this.state
     e.preventDefault()
     if (label.length > 0 && label[0] !== ' ') {
-      onEditingTask(id, this.state.label)
+      onEditingTask(id, label)
     }
   }
 
@@ -53,15 +54,16 @@ export default class Task extends Component {
       <li className={className}>
         <div className="view">
           <input className="toggle" type="checkbox" onChange={onToggleDone} checked={done === true ? 'checked' : ''} />
-          <label>
+          <label htmlFor="task" aria-label="task description">
             <span className="description">{label}</span>
             <span className="created">{distaceToNow}</span>
           </label>
-          <button className="icon icon-edit" onClick={onEditingToggle}></button>
-          <button className="icon icon-destroy " onClick={onDeleted}></button>
+          <button type="button" aria-label="edit task" className="icon icon-edit" onClick={onEditingToggle} />
+          <button type="button" aria-label="deleting task" className="icon icon-destroy " onClick={onDeleted} />
         </div>
         <form onSubmit={this.onSubmit}>
           <input
+            id="task"
             onKeyDown={this.handleKeyDown}
             type="text"
             defaultValue={label}
@@ -85,10 +87,10 @@ Task.defaultProps = {
 
 Task.propTypes = {
   onDeleted: PropTypes.func,
-  label: PropTypes.string,
+  label: PropTypes.string.isRequired,
   onToggleDone: PropTypes.func,
   onEditingToggle: PropTypes.func,
   done: PropTypes.bool,
   editing: PropTypes.bool,
-  created: PropTypes.instanceOf(Date),
+  created: PropTypes.instanceOf(Date).isRequired,
 }
