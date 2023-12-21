@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import TaskFilter from './TaskFilter'
-import './index.css'
 
 function Footer({ itemsLeft, onFilter, onClearCompleted, filter }) {
   return (
