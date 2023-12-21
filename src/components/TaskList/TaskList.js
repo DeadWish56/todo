@@ -6,7 +6,7 @@ import './index.css'
 
 /* eslint-disable react/jsx-props-no-spreading */
 
-function TaskList({ todos, onDeleted, onToggleDone, filter, onEditingToggle, onEditingTask }) {
+function TaskList({ todos, onDeleted, onToggleDone, filter, onEditingToggle, onEditingTask, onToggleTimer }) {
   const elements = todos.map((item) => {
     const { id } = item
     return (
@@ -23,6 +23,9 @@ function TaskList({ todos, onDeleted, onToggleDone, filter, onEditingToggle, onE
           onEditingToggle(id)
         }}
         onEditingTask={onEditingTask}
+        onToggleTimer={() => {
+          onToggleTimer(id)
+        }}
       />
     )
   })
@@ -52,7 +55,7 @@ TaskList.defaultProps = {
 
 TaskList.propTypes = {
   onDeleted: PropTypes.func,
-  todos: PropTypes.arrayOf,
+  todos: PropTypes.arrayOf(PropTypes.any),
   onToggleDone: PropTypes.func,
   filter: PropTypes.string,
   onEditingToggle: PropTypes.func,

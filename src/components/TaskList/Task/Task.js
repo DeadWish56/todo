@@ -9,7 +9,6 @@ export default class Task extends Component {
     this.state = {
       label: '',
     }
-
     document.addEventListener('mousedown', (e) => {
       const { editing, onEditingToggle, id } = this.props
       if (e.target.className !== 'edit' && editing === true) {
@@ -41,8 +40,11 @@ export default class Task extends Component {
   }
 
   render() {
-    const { onDeleted, onEditingToggle, label, onToggleDone, done, created, editing } = this.props
+    const { onDeleted, onEditingToggle, label, time, onToggleDone, done, created, editing, onToggleTimer, timerTick } =
+      this.props
     const distaceToNow = formatDistanceToNow(new Date(created), { includeSeconds: true, addSuffix: true })
+    const min = Math.floor(time / 60)
+    const sec = time % 60
     let className = ''
     if (done) {
       className += ' completed'
@@ -55,7 +57,22 @@ export default class Task extends Component {
         <div className="view">
           <input className="toggle" type="checkbox" onChange={onToggleDone} checked={done === true ? 'checked' : ''} />
           <label htmlFor="task" aria-label="task description">
-            <span className="description">{label}</span>
+            <span className="title">{label}</span>
+            <span className="description">
+              <button
+                type="button"
+                aria-label="запустить таймер"
+                className="icon icon-play"
+                onClick={timerTick === false ? onToggleTimer : null}
+              />
+              <button
+                type="button"
+                aria-label="остановить таймер"
+                className="icon icon-pause"
+                onClick={timerTick !== false ? onToggleTimer : null}
+              />
+              {min}:{sec < 10 ? `0${sec}` : sec}
+            </span>
             <span className="created">{distaceToNow}</span>
           </label>
           <button type="button" aria-label="edit task" className="icon icon-edit" onClick={onEditingToggle} />

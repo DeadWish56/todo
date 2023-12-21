@@ -11,15 +11,20 @@ export default class App extends Component {
   constructor(props) {
     super(props)
     this.maxID = 0
+    this.interval = null
 
     this.state = {
-      todoData: [
-        this.createNewTask('Drink coffee'),
-        this.createNewTask('Make Awesome App'),
-        this.createNewTask('Hava a nice day'),
-      ],
+      todoData: [this.createNewTask('Drink coffee', 10, 0)],
       filter: 'all',
     }
+  }
+
+  componentDidMount() {
+    this.interval = setInterval(this.updateTime, 1000)
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval)
   }
 
   onEditingToggle = (id) => {
@@ -77,8 +82,37 @@ export default class App extends Component {
     })
   }
 
-  addTask = (text) => {
-    const newTask = this.createNewTask(text)
+  onToggleTimer = (id) => {
+    this.setState(({ todoData }) => {
+      const idx = todoData.findIndex((el) => el.id === id)
+      const oldItem = todoData[idx]
+      const newItem = { ...oldItem, timerTick: !oldItem.timerTick }
+      const newArr = todoData.toSpliced(idx, 1, newItem)
+      return {
+        todoData: newArr,
+      }
+    })
+  }
+
+  updateTime = () => {
+    this.setState(({ todoData }) => {
+      const newArr = todoData.map((item) => {
+        if (item.time === 0 || item.done === true) {
+          return item
+        }
+        if (item.timerTick) {
+          item.time -= 1 // eslint-disable-line no-param-reassign
+        }
+        return item
+      })
+      return {
+        todoData: newArr,
+      }
+    })
+  }
+
+  addTask = (text, min, sec) => {
+    const newTask = this.createNewTask(text, min, sec)
 
     this.setState(({ todoData }) => {
       return {
@@ -100,7 +134,7 @@ export default class App extends Component {
     })
   }
 
-  createNewTask(label) {
+  createNewTask(label, min, sec) {
     return {
       label,
       /* eslint no-plusplus: "error" */
@@ -108,6 +142,8 @@ export default class App extends Component {
       done: false,
       editing: false,
       created: new Date(),
+      time: Number(sec) + min * 60,
+      timerTick: false,
     }
   }
 
@@ -125,6 +161,7 @@ export default class App extends Component {
             onToggleDone={this.onToggleDone}
             onEditingToggle={this.onEditingToggle}
             onEditingTask={this.editingTask}
+            onToggleTimer={this.onToggleTimer}
           />
 
           <Footer

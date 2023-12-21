@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import './index.css'
-import TaskList from '../../TaskList'
 
 function TaskFilter({ onFilter, filter }) {
   return (
@@ -54,4 +53,4 @@ TaskFilter.propTypes = {
   filter: PropTypes.string,
 }
 
-export default TaskList
+export default TaskFilter
