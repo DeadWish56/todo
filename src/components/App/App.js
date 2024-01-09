@@ -20,7 +20,9 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    this.interval = setInterval(this.updateTime, 1000)
+    this.interval = setInterval(() => {
+      this.updateTime()
+    }, 1000)
   }
 
   componentWillUnmount() {
@@ -152,25 +154,27 @@ export default class App extends Component {
     const itemsLeft = todoData.length - todoData.filter((el) => el.done).length
     return (
       <section className="todoapp">
-        <NewTaskForm onAddTask={this.addTask} />
-        <section className="main">
-          <TaskList
-            todos={todoData}
-            filter={filter}
-            onDeleted={this.deleteTask}
-            onToggleDone={this.onToggleDone}
-            onEditingToggle={this.onEditingToggle}
-            onEditingTask={this.editingTask}
-            onToggleTimer={this.onToggleTimer}
-          />
+        <React.StrictMode>
+          <NewTaskForm onAddTask={this.addTask} />
+          <section className="main">
+            <TaskList
+              todos={todoData}
+              filter={filter}
+              onDeleted={this.deleteTask}
+              onToggleDone={this.onToggleDone}
+              onEditingToggle={this.onEditingToggle}
+              onEditingTask={this.editingTask}
+              onToggleTimer={this.onToggleTimer}
+            />
 
-          <Footer
-            itemsLeft={itemsLeft}
-            onFilter={this.todoFilter}
-            filter={filter}
-            onClearCompleted={this.clearCompleted}
-          />
-        </section>
+            <Footer
+              itemsLeft={itemsLeft}
+              onFilter={this.todoFilter}
+              filter={filter}
+              onClearCompleted={this.clearCompleted}
+            />
+          </section>
+        </React.StrictMode>
       </section>
     )
   }

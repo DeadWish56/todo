@@ -83,7 +83,7 @@ export default class Task extends Component {
             id="task"
             onKeyDown={this.handleKeyDown}
             type="text"
-            defaultValue={label}
+            placeholder="Editing task"
             className="edit"
             onChange={this.onLabelChange}
             ref={(input) => input && input.focus()}
